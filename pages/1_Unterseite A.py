@@ -3,11 +3,6 @@ import streamlit as st
 st.title("Erythrozyten Indices")
 
 # Input fields for user to enter values
-import streamlit as st
-
-st.title("Erythrozyten Indices")
-
-# Input fields for user to enter values
 hb = st.number_input("Hämoglobin (g/dL)", min_value=0.0, format="%.2f")
 rbc = st.number_input("Erythrozytenzahl (10^12/L)", min_value=0.0, format="%.2f")
 hct = st.number_input("Hämatokrit (%)", min_value=0.0, format="%.2f")
