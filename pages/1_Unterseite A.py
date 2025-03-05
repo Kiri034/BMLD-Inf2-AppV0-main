@@ -49,7 +49,7 @@ if st.button("Analysieren", key="analyze_button", help="Klicken Sie hier, um die
             st.markdown(f"<span style='color:red'>Typ: {condition_type}</span>", unsafe_allow_html=True)
 
         # Save the current values to session state
-        st.session_state.data.append({'MCV': mcv, 'MCH': mch, 'MCHC': mchc, 'Typ': condition_type})
+        st.session_state.data.append({'Tag': len(st.session_state.data) + 1, 'MCV': mcv, 'MCH': mch, 'MCHC': mchc, 'Typ': condition_type})
     else:
         st.write("Bitte geben Sie gültige Werte für Hämoglobin, Erythrozytenzahl und Hämatokrit ein.")
 
@@ -67,17 +67,21 @@ st.markdown("""
 if st.session_state.data:
     df = pd.DataFrame(st.session_state.data)
     fig, ax = plt.subplots()
-    ax.scatter(df['MCV'], df['MCH'], c='blue', label='MCV vs MCH')
-    ax.scatter(df['MCV'], df['MCHC'], c='green', label='MCV vs MCHC')
-    ax.set_xlabel('MCV (fL)')
-    ax.set_ylabel('MCH (pg) / MCHC (g/dL)')
+    ax.scatter(df['Tag'], df['MCV'], c='blue', label='Tag vs MCV')
+    ax.scatter(df['Tag'], df['MCH'], c='green', label='Tag vs MCH')
+    ax.scatter(df['Tag'], df['MCHC'], c='red', label='Tag vs MCHC')
+    ax.set_xlabel('Tag')
+    ax.set_ylabel('Werte')
     ax.legend()
     st.pyplot(fig)
 
     # Option to download the plot
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png')
+    buf.seek(0)
     st.download_button(
         label="Download Plot",
-        data=fig_to_image(fig),
+        data=buf,
         file_name='scatter_plot.png',
         mime='image/png'
     )
