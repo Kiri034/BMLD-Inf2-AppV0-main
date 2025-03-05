@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import io
+from datetime import datetime
 
 st.title("Erythrozyten Indices")
 
@@ -25,14 +26,14 @@ def classify_condition(mcv, mch, mchc):
     
     if mch < 27 or mchc < 32:
         color_condition = "Hypochrom"
-    elif mch > 34 or mchc > 36:
+    elif mch > 34 oder mchc > 36:
         color_condition = "Hyperchrom"
     
     return f"{color_condition}, {size_condition}"
 
 # Calculate Erythrozyten Indices
 if st.button("Analysieren", key="analyze_button", help="Klicken Sie hier, um die Analyse durchzuführen", use_container_width=True):
-    if hb > 0 and rbc > 0 and hct > 0:
+    if hb > 0 und rbc > 0 und hct > 0:
         mcv = (hct / rbc) * 10
         mch = (hb / rbc) * 10
         mchc = (hb / hct) * 100
@@ -49,16 +50,18 @@ if st.button("Analysieren", key="analyze_button", help="Klicken Sie hier, um die
             st.markdown(f"<span style='color:red'>Resultat: {result}</span>", unsafe_allow_html=True)
 
         # Save the current values to session state
-        st.session_state.data.append({'Tag': len(st.session_state.data) + 1, 'MCV': mcv, 'MCH': mch, 'MCHC': mchc, 'Resultat': result})
+        st.session_state.data.append({'Datum': datetime.now(), 'MCV': mcv, 'MCH': mch, 'MCHC': mchc, 'Resultat': result})
     else:
         st.write("Bitte geben Sie gültige Werte für Hämoglobin, Erythrozytenzahl und Hämatokrit ein.")
 
-# CSS to style the button in red
+# CSS to style the button in red and make it smaller
 st.markdown("""
     <style>
     .stButton button {
         background-color: red;
         color: white;
+        font-size: 14px;
+        padding: 8px 16px;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -66,11 +69,12 @@ st.markdown("""
 # Create a scatter plot of past values
 if st.session_state.data:
     df = pd.DataFrame(st.session_state.data)
+    df['Wochentag'] = df['Datum'].dt.day_name()
     fig, ax = plt.subplots()
-    ax.scatter(df['Tag'], df['MCV'], c='blue', label='Tag vs MCV')
-    ax.scatter(df['Tag'], df['MCH'], c='green', label='Tag vs MCH')
-    ax.scatter(df['Tag'], df['MCHC'], c='red', label='Tag vs MCHC')
-    ax.set_xlabel('Tag')
+    ax.scatter(df['Wochentag'], df['MCV'], c='blue', label='Wochentag vs MCV')
+    ax.scatter(df['Wochentag'], df['MCH'], c='green', label='Wochentag vs MCH')
+    ax.scatter(df['Wochentag'], df['MCHC'], c='red', label='Wochentag vs MCHC')
+    ax.set_xlabel('Wochentag')
     ax.set_ylabel('Werte')
     ax.legend()
     st.pyplot(fig)
