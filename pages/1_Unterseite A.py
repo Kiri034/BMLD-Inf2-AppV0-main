@@ -41,15 +41,15 @@ if st.button("Analysieren", key="analyze_button", help="Klicken Sie hier, um die
         st.write(f"Mittleres korpuskuläres Hämoglobin (MCH): {mch:.2f} pg")
         st.write(f"Mittlere korpuskuläre Hämoglobinkonzentration (MCHC): {mchc:.2f} g/dL")
 
-        condition_type = classify_condition(mcv, mch, mchc)
+        result = classify_condition(mcv, mch, mchc)
         
-        if condition_type == "Normochrom, Normozytär":
-            st.write(f"Typ: {condition_type}")
+        if result == "Normochrom, Normozytär":
+            st.write(f"Resultat: {result}")
         else:
-            st.markdown(f"<span style='color:red'>Typ: {condition_type}</span>", unsafe_allow_html=True)
+            st.markdown(f"<span style='color:red'>Resultat: {result}</span>", unsafe_allow_html=True)
 
         # Save the current values to session state
-        st.session_state.data.append({'Tag': len(st.session_state.data) + 1, 'MCV': mcv, 'MCH': mch, 'MCHC': mchc, 'Typ': condition_type})
+        st.session_state.data.append({'Tag': len(st.session_state.data) + 1, 'MCV': mcv, 'MCH': mch, 'MCHC': mchc, 'Resultat': result})
     else:
         st.write("Bitte geben Sie gültige Werte für Hämoglobin, Erythrozytenzahl und Hämatokrit ein.")
 
