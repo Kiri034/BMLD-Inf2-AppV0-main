@@ -26,14 +26,14 @@ def classify_condition(mcv, mch, mchc):
     
     if mch < 27 or mchc < 32:
         color_condition = "Hypochrom"
-    elif mch > 34 oder mchc > 36:
+    elif mch > 34 or mchc > 36:
         color_condition = "Hyperchrom"
     
     return f"{color_condition}, {size_condition}"
 
 # Calculate Erythrozyten Indices
 if st.button("Analysieren", key="analyze_button", help="Klicken Sie hier, um die Analyse durchzuführen", use_container_width=True):
-    if hb > 0 und rbc > 0 und hct > 0:
+    if hb > 0 and rbc > 0 and hct > 0:
         mcv = (hct / rbc) * 10
         mch = (hb / rbc) * 10
         mchc = (hb / hct) * 100
