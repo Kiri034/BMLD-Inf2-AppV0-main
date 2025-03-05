@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import io
 
 st.title("Erythrozyten Indices")
 
@@ -82,7 +83,6 @@ if st.session_state.data:
     )
 
 def fig_to_image(fig):
-    import io
     buf = io.BytesIO()
     fig.savefig(buf, format='png')
     buf.seek(0)
