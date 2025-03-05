@@ -60,8 +60,8 @@ st.markdown("""
     .stButton button {
         background-color: red;
         color: white;
-        font-size: 14px;
-        padding: 8px 16px;
+        font-size: 10px;  /* Reduced font size */
+        padding: 4px 8px;  /* Reduced padding */
     }
     </style>
     """, unsafe_allow_html=True)
@@ -71,9 +71,9 @@ if st.session_state.data:
     df = pd.DataFrame(st.session_state.data)
     df['Wochentag'] = df['Datum'].dt.day_name()
     fig, ax = plt.subplots()
-    ax.scatter(df['Wochentag'], df['MCV'], c='blue', label='Wochentag vs MCV')
-    ax.scatter(df['Wochentag'], df['MCH'], c='green', label='Wochentag vs MCH')
-    ax.scatter(df['Wochentag'], df['MCHC'], c='red', label='Wochentag vs MCHC')
+    ax.scatter(df['Wochentag'], df['MCV'], c='blue', label='MCV')
+    ax.scatter(df['Wochentag'], df['MCH'], c='green', label='MCH')
+    ax.scatter(df['Wochentag'], df['MCHC'], c='red', label='MCHC')
     ax.set_xlabel('Wochentag')
     ax.set_ylabel('Werte')
     ax.legend()
