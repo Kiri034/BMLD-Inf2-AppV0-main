@@ -18,7 +18,7 @@ st.write("Link zur App: https://workspace-elena-kirisha.streamlit.app/")
 
 
 st.markdown("""
-## Autoren
+#### Autoren
 
 - **Elena Müller** (muellel3@students.zhaw.ch)
 - **Kirisha Tharmaratnam** (tharmkir@students.zhaw.ch)
