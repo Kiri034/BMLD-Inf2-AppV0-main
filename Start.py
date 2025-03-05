@@ -4,7 +4,7 @@ import pandas as pd
 st.title("Anämie-App")
 
 st.markdown("""
-## App-Beschreibung
+#### App-Beschreibung
 Version 0.1 der Anämie-App für den Kurs Informatik 2. 
 Die App dient zur Diagnose von Anämie auf Basis von Laborwerten. 
 Die App ist anhand der folgenden Formel programmiert:
