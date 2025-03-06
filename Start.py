@@ -6,7 +6,7 @@ st.title("Anämie-App")
 st.markdown("""
 #### App-Beschreibung
 Version 0.1 der Anämie-App für den Kurs Informatik 2. 
-Die App dient zur Diagnose von Anämie auf Basis von Laborwerten. 
+Diese App unterstützt Fachpersonen bei der Diagnose von Anämien, indem sie präzise Laborwerte analysiert und interpretiert.  
 Die App ist anhand der folgenden Formel programmiert:
 - **MCV** = Referenzbereich (80-100 fl)
 - **MCH** = Hämoglobin/RbC (27-34 pg)
