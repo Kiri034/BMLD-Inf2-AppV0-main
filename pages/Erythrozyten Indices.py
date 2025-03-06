@@ -24,9 +24,9 @@ def classify_condition(mcv, mch, mchc):
     elif mcv > 100:
         size_condition = "Makrozytär"
     
-    if mch < 27 or mchc < 33:
+    if mch < 27 or mchc > 33:
         color_condition = "Hypochrom"
-    elif mch < 32 or mchc < 36:
+    elif mch < 32 or mchc > 36:
         color_condition = "Hyperchrom"
     
     return f"{color_condition}, {size_condition}"
