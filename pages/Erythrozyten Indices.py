@@ -1,3 +1,9 @@
+# ====== Start Login Block ======
+from utils.login_manager import LoginManager
+LoginManager().go_to_login('Start.py') 
+# ====== End Login Block ======
+
+# Here starts the actual app
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -69,14 +75,14 @@ st.markdown("""
 # Create a scatter plot of past values
 if st.session_state.data:
     df = pd.DataFrame(st.session_state.data)
-    df['Wochentag'] = df['Datum'].dt.day_name()
     fig, ax = plt.subplots()
-    ax.scatter(df['Wochentag'], df['MCV'], c='blue', label='MCV')
-    ax.scatter(df['Wochentag'], df['MCH'], c='green', label='MCH')
-    ax.scatter(df['Wochentag'], df['MCHC'], c='red', label='MCHC')
-    ax.set_xlabel('Wochentag')
+    ax.scatter(df['Datum'], df['MCV'], c='blue', label='MCV')
+    ax.scatter(df['Datum'], df['MCH'], c='green', label='MCH')
+    ax.scatter(df['Datum'], df['MCHC'], c='red', label='MCHC')
+    ax.set_xlabel('Datum')
     ax.set_ylabel('Werte')
     ax.legend()
+    plt.xticks(rotation=45)  # Rotate x-axis labels for better readability
     st.pyplot(fig)
 
     # Option to download the plot
