@@ -18,6 +18,7 @@ data_manager.load_user_data(
     parse_dates = ['timestamp']
     )
 
+
 # here starts our app
 
 import streamlit as st
