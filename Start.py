@@ -1,4 +1,5 @@
 
+import streamlit as st
 import pandas as pd
 from utils.data_manager import DataManager
 from utils.login_manager import LoginManager
@@ -21,8 +22,8 @@ data_manager.load_user_data(
 
 # here starts our app
 
-import streamlit as st
-import pandas as pd
+if 'key' not in st.session_state:
+    st.session_state['key'] = 'value'
 
 st.title("Anämie-App")
 
