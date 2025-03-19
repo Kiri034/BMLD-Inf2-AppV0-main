@@ -75,30 +75,7 @@ st.markdown("""
 # Create a scatter plot of past values
 if st.session_state.data:
     df = pd.DataFrame(st.session_state.data)
-    df['Datum'] = pd.to_datetime(df['Datum'])  # Ensure Datum is in datetime format
-    fig, ax = plt.subplots()
-    ax.scatter(df['Datum'], df['MCV'], c='blue', label='MCV')
-    ax.scatter(df['Datum'], df['MCH'], c='green', label='MCH')
-    ax.scatter(df['Datum'], df['MCHC'], c='red', label='MCHC')
-    ax.set_xlabel('Datum')
-    ax.set_ylabel('Werte')
-    ax.legend()
-    ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%d.%m.%Y %H:%M'))  # Format Datum
-    plt.xticks(rotation=45)  # Rotate x-axis labels for better readability
-    st.pyplot(fig)
-
-    # Option to download the plot
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png')
-    buf.seek(0)
-    st.download_button(
-        label="Download Plot",
-        data=buf,
-        file_name='scatter_plot.png',
-        mime='image/png'
-    )
-if st.session_state.data:
-    df = pd.DataFrame(st.session_state.data)
+    df['Datum'] = df['Datum'].dt.date  # Convert datetime to date to remove time
     fig, ax = plt.subplots()
     ax.scatter(df['Datum'], df['MCV'], c='blue', label='MCV')
     ax.scatter(df['Datum'], df['MCH'], c='green', label='MCH')
