@@ -231,6 +231,7 @@ class DataManager:
 
         """
         data_value = st.session_state[session_state_key]
+        self.save_user_data(session_state_key=session_state_key, file_name='data.csv')
         
         if not isinstance(record_dict, dict):
             raise ValueError(f"DataManager: The record_dict must be a dictionary")
