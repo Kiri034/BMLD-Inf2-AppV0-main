@@ -3,7 +3,11 @@ from utils.login_manager import LoginManager
 LoginManager().go_to_login('Start.py') 
 # ====== End Login Block ======
 
+
+# Here starts the actual app
+
 import streamlit as st
+import pandas as pd
 
 st.title("Werte")
 
