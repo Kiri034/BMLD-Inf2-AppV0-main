@@ -9,15 +9,30 @@ st.title('Grafik')
 # Überprüfen, ob Daten vorhanden sind
 if 'data' not in st.session_state or not st.session_state.data:
     st.write("Es sind keine Daten verfügbar, um die Grafik zu erstellen.")
+    st.write("Debug: Keine Daten in st.session_state.data")
 else:
     df = pd.DataFrame(st.session_state.data)
+
+    # Debug: Zeige die Spalten und Daten an
+    st.write("Debug: Spalten im DataFrame:", df.columns)
+    st.write("Debug: Daten im DataFrame:", df)
 
     # Überprüfen, ob die erforderlichen Spalten vorhanden sind
     required_columns = ['Datum', 'MCV', 'MCH', 'MCHC']
     if not all(col in df.columns for col in required_columns):
         st.write("Die erforderlichen Spalten sind in den Daten nicht vorhanden.")
+        st.write("Debug: Fehlende Spalten:", [col for col in required_columns if col not in df.columns])
     else:
-        df['Datum'] = pd.to_datetime(df['Datum']).dt.date  # Konvertiere Datum in reines Datumsformat
+        # Debug: Zeige die Werte der Spalte Datum
+        st.write("Debug: Werte in der Spalte 'Datum':", df['Datum'])
+
+        # Konvertiere die Datumsspalte in ein reines Datumsformat
+        df['Datum'] = pd.to_datetime(df['Datum'], errors='coerce').dt.date
+        if df['Datum'].isnull().any():
+            st.write("Debug: Ungültige Datumswerte gefunden.")
+            df = df.dropna(subset=['Datum'])
+
+        # Erstelle den Scatterplot
         fig, ax = plt.subplots()
         ax.scatter(df['Datum'], df['MCV'], c='blue', label='MCV')
         ax.scatter(df['Datum'], df['MCH'], c='green', label='MCH')
@@ -39,10 +54,3 @@ else:
             file_name=file_name,
             mime='image/png'
         )
-
-# Hilfsfunktion zum Konvertieren einer Figur in ein Bild
-def fig_to_image(fig):
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png')
-    buf.seek(0)
-    return buf
