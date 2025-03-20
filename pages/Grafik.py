@@ -16,7 +16,6 @@ from datetime import datetime
 
 st.title("Graph der Erythrozyten-Indizes")
 
-# Überprüfen, ob Daten vorhanden sind
 if 'data' not in st.session_state or not st.session_state.data:
     st.write("Es sind keine Daten verfügbar, um die Grafik zu erstellen.")
 else:
@@ -30,6 +29,7 @@ else:
     else:
         # Konvertiere die Datumsspalte in ein reines Datumsformat
         df['Datum'] = pd.to_datetime(df['Datum'], errors='coerce').dt.date
+        df = df.dropna(subset=['Datum'])
 
         # Erstelle den Scatterplot
         fig, ax = plt.subplots()
@@ -39,7 +39,7 @@ else:
         ax.set_xlabel('Datum')
         ax.set_ylabel('Werte')
         ax.legend()
-        plt.xticks(rotation=45)  # Drehe die X-Achsen-Beschriftungen
+        plt.xticks(rotation=45)  
         st.pyplot(fig)
 
         # Option zum Herunterladen der Grafik
