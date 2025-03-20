@@ -1,3 +1,11 @@
+# ====== Start Login Block ======
+from utils.login_manager import LoginManager
+LoginManager().go_to_login('Start.py') 
+# ====== End Login Block ======
+
+
+# Here starts the graph page
+
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
