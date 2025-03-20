@@ -1,4 +1,5 @@
 # ====== Start Login Block ======
+from utils.data_manager import DataManager
 from utils.login_manager import LoginManager
 LoginManager().go_to_login('Start.py') 
 # ====== End Login Block ======
@@ -61,7 +62,7 @@ if st.button("Analysieren", key="analyze_button", help="Klicken Sie hier, um die
         st.session_state.data.append(new_record)
 
         # update the data.csv file
-        Datamanager().append_record(session_state_key='data_df', record_dict=new_record)
+        DataManager().append_record(session_state_key='data_df', record_dict=new_record)
 
         st.success("Daten erfolgreich gespeichert.")
     else:
