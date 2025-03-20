@@ -19,14 +19,15 @@ code_dict = {
         "description": "Berechnung und Visualisierung der Erythrozyten-Indizes.",
         "functions": [
             "classify_condition(mcv, mch, mchc)",
-            "fig_to_image(fig)"
+            "DataManager().append_record(session_state_key, record_dict)"
         ],
         "features": [
             "Eingabe von Hämoglobin, Erythrozytenzahl und Hämatokrit",
             "Berechnung von MCV, MCH und MCHC",
+            "Klassifikation der Ergebnisse (Normochrom, Mikrozytär, etc.)",
             "Speichern der Ergebnisse in st.session_state",
-            "Scatterplot der Ergebnisse",
-            "Download-Option für den Scatterplot"
+            "Speichern der Ergebnisse in einer CSV-Datei",
+            "Erfolgsmeldung bei erfolgreicher Speicherung"
         ]
     },
     "Werte.py": {
@@ -38,6 +39,18 @@ code_dict = {
             "Anzeige einer Nachricht, wenn keine Daten vorhanden sind"
         ]
     },
+    "Grafik.py": {
+        "description": "Erstellung und Anzeige eines Scatterplots basierend auf gespeicherten Daten.",
+        "functions": [
+            "fig_to_image(fig)"
+        ],
+        "features": [
+            "Erstellung eines Scatterplots für MCV, MCH und MCHC",
+            "Drehung der X-Achsen-Beschriftungen für bessere Lesbarkeit",
+            "Download-Option für die Grafik als PNG-Datei",
+            "Überprüfung auf fehlende Daten und Spalten"
+        ]
+    },
     "utils/data_manager.py": {
         "description": "Hilfsfunktionen für das Datenmanagement.",
         "functions": [
@@ -46,7 +59,8 @@ code_dict = {
         ],
         "features": [
             "Speichern und Verwalten von Daten in st.session_state",
-            "Unterstützung für DataFrame und Listen"
+            "Unterstützung für DataFrame und Listen",
+            "Speichern von Daten in einer CSV-Datei"
         ]
     },
     "utils/login_manager.py": {
