@@ -160,8 +160,8 @@ class DataManager:
             for key in self.user_data_reg:  # delete all user data
                 st.session_state.pop(key)
             self.user_data_reg = {}
+            st.error(f"DataManager: No user logged in, cannot load file `{file_name}` into session state with key `{session_state_key}`")
             return
-            # raise ValueError(f"DataManager: No user logged in, cannot load user data {file_name}")
         elif session_state_key in st.session_state:
             return
 
@@ -231,7 +231,6 @@ class DataManager:
 
         """
         data_value = st.session_state[session_state_key]
-        self.save_user_data(session_state_key=session_state_key, file_name='data.csv')
         
         if not isinstance(record_dict, dict):
             raise ValueError(f"DataManager: The record_dict must be a dictionary")
