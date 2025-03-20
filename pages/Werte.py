@@ -6,6 +6,10 @@ LoginManager().go_to_login('Start.py')
 
 # Here starts the actual app
 
+# Überprüfen, ob die Session-State-Variable 'data' initialisiert ist
+if 'data' not in st.session_state:
+    st.session_state.data = [] 
+
 import streamlit as st
 import pandas as pd
 
