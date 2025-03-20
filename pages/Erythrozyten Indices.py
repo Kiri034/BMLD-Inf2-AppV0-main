@@ -40,29 +40,28 @@ def classify_condition(mcv, mch, mchc):
 
 # Calculate Erythrozyten Indices
 
-# Append new data to the session state DataFrame
-if 'data_df' not in st.session_state:
-    st.session_state['data_df'] = pd.DataFrame(columns=['Datum', 'MCV', 'MCH', 'MCHC', 'Resultat'])
-
-if st.button("Daten speichern", key="save_button", help="Speichern Sie die aktuellen Daten", use_container_width=True):
+if st.button("Analysieren", key="analyze_button", help="Klicken Sie hier, um die Analyse durchzuführen", use_container_width=True):
     if hb > 0 and rbc > 0 and hct > 0:
         mcv = (hct / rbc) * 10
         mch = (hb / rbc) * 10
         mchc = (hb / hct) * 100
-        result = classify_condition(mcv, mch, mchc)
 
-        new_record = {
-            'Datum': datetime.now(),
-            'MCV': mcv,
-            'MCH': mch,
-            'MCHC': mchc,
-            'Resultat': result
-        }
-        st.session_state['data_df'] = st.session_state['data_df'].append(new_record, ignore_index=True)
-        DataManager().append_record(new_record)
-        st.success("Daten erfolgreich gespeichert!")
+        st.write(f"Mittleres korpuskuläres Volumen (MCV): {mcv:.2f} fL")
+        st.write(f"Mittleres korpuskuläres Hämoglobin (MCH): {mch:.2f} pg")
+        st.write(f"Mittlere korpuskuläre Hämoglobinkonzentration (MCHC): {mchc:.2f} g/dL")
+
+        result = classify_condition(mcv, mch, mchc)
+        
+        if result == "Normochrom, Normozytär":
+            st.write(f"Resultat: {result}")
+        else:
+            st.markdown(f"<span style='color:red'>Resultat: {result}</span>", unsafe_allow_html=True)
+
+        # Save the current values to session state
+        st.session_state.data.append({'Datum': datetime.now(), 'MCV': mcv, 'MCH': mch, 'MCHC': mchc, 'Resultat': result})
     else:
-        st.error("Bitte geben Sie gültige Werte für Hämoglobin, Erythrozytenzahl und Hämatokrit ein.")
+        st.write("Bitte geben Sie gültige Werte für Hämoglobin, Erythrozytenzahl und Hämatokrit ein.")
+
 
 # CSS to style the button in red and make it smaller
 st.markdown("""
@@ -106,3 +105,7 @@ def fig_to_image(fig):
     fig.savefig(buf, format='png')
     buf.seek(0)
     return buf
+
+
+  from utils.data_manager import DataManager
+    DataManager().append_record(session_state_key='data_df', record_dict=result)  # update data in session state and storage
