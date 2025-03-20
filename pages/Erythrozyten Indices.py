@@ -63,7 +63,7 @@ if st.button("Analysieren", key="analyze_button", help="Klicken Sie hier, um die
 
         # update the data.csv file
         from utils.data_manager import DataManager
-        DataManager().append_record(session_state_key='data', record_dict=new_record)
+        DataManager().append_record(session_state_key='data_df', record_dict=result)
 
 
         st.success("Daten erfolgreich gespeichert.")
