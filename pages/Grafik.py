@@ -3,24 +3,27 @@ from utils.login_manager import LoginManager
 LoginManager().go_to_login('Start.py') 
 # ====== End Login Block ======
 
-
 # Here starts the graph page
-if 'data' not in st.session_state:
-    st.session_state.data = [] 
-
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import io
 from datetime import datetime
 
+# Initialisiere st.session_state['data'], falls es nicht existiert
+if 'data' not in st.session_state:
+    st.session_state['data'] = []
+
 st.title("Graph der Erythrozyten-Indizes")
 
-if 'data' not in st.session_state or not st.session_state.data:
+# Debugging: Zeige den Inhalt von st.session_state['data']
+st.write("Debug: Inhalt von st.session_state['data']:", st.session_state['data'])
+
+if not st.session_state['data']:
     st.write("Es sind keine Daten verfügbar, um die Grafik zu erstellen.")
 else:
     # Erstelle einen DataFrame aus den gespeicherten Daten
-    df = pd.DataFrame(st.session_state.data)
+    df = pd.DataFrame(st.session_state['data'])
 
     # Überprüfen, ob die erforderlichen Spalten vorhanden sind
     required_columns = ['Datum', 'MCV', 'MCH', 'MCHC']

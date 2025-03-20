@@ -1,8 +1,8 @@
-
 import streamlit as st
 import pandas as pd
 from utils.data_manager import DataManager
 from utils.login_manager import LoginManager
+import os
 
 # initialize the data manager
 data_manager = DataManager(fs_protocol='webdav', fs_root_folder="workspace")  # switch drive 
@@ -11,14 +11,22 @@ data_manager = DataManager(fs_protocol='webdav', fs_root_folder="workspace")  # 
 login_manager = LoginManager(data_manager)
 login_manager.login_register()  # open login/register page
 
-# load the data from the persistent storage into the session state
-data_manager.load_user_data(
-    session_state_key='data_df', 
-    file_name='data.csv', 
-    initial_value = pd.DataFrame(), 
-    parse_dates = ['Datum']
-    )
+# Debugging: Überprüfe, ob die Datei existiert
+if not os.path.exists('workspace/data.csv'):
+    st.warning("Die Datei 'data.csv' existiert nicht. Eine leere Datei wird erstellt.")
+    df = pd.DataFrame(columns=['Datum', 'MCV', 'MCH', 'MCHC', 'Resultat'])
+    df.to_csv('workspace/data.csv', index=False)
 
+# load the data from the persistent storage into the session state
+try:
+    data_manager.load_user_data(
+        session_state_key='data_df', 
+        file_name='data.csv', 
+        initial_value=pd.DataFrame(), 
+        parse_dates=['Datum']
+    )
+except Exception as e:
+    st.error(f"Fehler beim Laden der Datei: {e}")
 
 # here starts our app
 
@@ -37,9 +45,7 @@ Die App ist anhand der folgenden Formel programmiert:
 - **MCHC** = Hämoglobin/Hkt (32-36 g/dl)
 """)
 
-
 st.write("Link zur App: https://workspace-elena-kirisha.streamlit.app/")
-
 
 st.markdown("""
 #### Autoren
