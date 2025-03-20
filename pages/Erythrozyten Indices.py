@@ -9,7 +9,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import io
 from datetime import datetime
-from utils.data_manager import DataManager
+
 
 st.title("Erythrozyten Indices")
 
